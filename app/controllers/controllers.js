@@ -14,7 +14,7 @@ app.controller('MemoryController', function ($scope, $timeout) {
             obj.opened = true;
             // provera da li su prvo otvoreno i drugo otvoreno isti
             if ($scope.currOpened.value === obj.value) {
-                // ako jesu ostavi ih otvorene i disable oba
+                // ako jesu ostavi ih otvorene i disable ob
                 obj.opened = true;
                 obj.disable = true;
                 $scope.currOpened.disable = true;
