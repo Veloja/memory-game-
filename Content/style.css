@@ -48,6 +48,32 @@ body {
     color: black;
     cursor: pointer;
   }
+.startbtn {
+    display: block;
+    margin: 10px auto;
+    position: relative;
+    text-align: center;
+  }
+.critical {
+    color: red;
+  }
+.footer{
+    display: inline;
+  }
+.timer {
+    display: block;
+    margin: 10px auto;
+    position: relative;
+    width: 150px;
+    height: 50px;
+    line-height: 50px;
+    background-color: #fff;
+    border-radius: 25px;
+    border: 2px solid #000000;
+    font-size: 40px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+  }
 
 img.bg {
     /* Set rules to fill background */

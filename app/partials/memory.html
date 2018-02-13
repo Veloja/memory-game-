@@ -1,5 +1,11 @@
 <body>
     <div class="container">
+        <div class="footer">
+            <button type="button" class="btn btn-primary btn-lg" ng-disabled="inGame" ng-click="start()">Start</button>
+            <div class="timer" ng-model="timeLimit" ng-class="{'critical':isCritical === true}">
+                {{timeLimit | date: 'm:ss'}}
+            </div>
+        </div>
         <div class="row">
             <div class="col-12">
                 <div ng-repeat="row in nizNizova track by $index" class="row">
@@ -7,16 +13,15 @@
                         <fieldset ng-disabled="obj.disable" class="flip col-12" ng-click="open(obj)">
                             <div class="card" ng-class="{'flipped':obj.opened === true}">
                                 <div class="face front">
-                                    
+
                                 </div>
                                 <div class="face back">
                                     {{obj.value}}
                                 </div>
-                            </fieldset>
+                        </fieldset>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>

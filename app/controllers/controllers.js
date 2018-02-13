@@ -9,33 +9,33 @@ app.controller('MemoryController', function ($scope, $timeout) {
     $scope.isFlipped = false;
     $scope.currOpened = null;
     $scope.open = function (obj, index) {
-        // ako je otvoreno jedno polje
+        // if only one square is opened
         if ($scope.currOpened !== null) {
-            // otvori i drugo
+            // then open second square
             obj.opened = true;
-            // onemoguci kliktanje na trece polje dok se prva dva ne zatvore
+            // disable click on third or any other square until checking is done
             disableRestOf();
-            // provera da li su prvo otvoreno i drugo otvoreno isti
+            // check if first and second opened square are the same
             if ($scope.currOpened.value === obj.value) {
-                // ako jesu ostavi ih otvorene i disable oba
+                // if they are, leave them opened and disabled for further clicking
                 obj.opened = true;
                 obj.disable = true;
                 $scope.currOpened.disable = true;
-                // omoguci ponovo sva polja da moze da se klikne
+                // enable all squares to be clicked again
                 enableRestOf();
-                // vrati current na null
+                // get current on null
                 $scope.currOpened = null;
             } else {
-                // ako nisu ista dva polja, ostavi 2 sek pre nego sto se zatvore
+                // if not same two squares, wait one sec before they both close
                 $timeout(function () {
                     enableRestOf();
                     $scope.currOpened.opened = false;
                     $scope.currOpened.disable = false;
                     $scope.currOpened = null;
                     obj.opened = false;
-                }, 2000);
+                }, 1000);
             }
-            // otvori prvo kliknuto polje; pocetak radnje; stanje
+            // open first clicked field; start of the state
         } else {
             $scope.currOpened = obj;
             $scope.currOpened.opened = true;
@@ -65,6 +65,36 @@ app.controller('MemoryController', function ($scope, $timeout) {
         }
     }
 
+    // for the timer
+	$scope.timeLimit = 60000;
+	$scope.isCritical = false;
+	
+    var timer = null;
+    // start the timer as soon as the player presses start
+	$scope.start = function(){
+		
+		// set the time of 1 minutes and remove the cards guard
+		$scope.timeLimit = 60000;
+		$scope.inGame = true;
 
+        $scope.startTimer();
+	}	
+	// function to stop the timer
+	$scope.stopTimer = function() {
+	  $timeout.cancel(timer);
+	  $scope.inGame = false;
+	}
+
+    $scope.startTimer = function() {
+        $scope.timeLimit -= 1000;
+        if($scope.timeLimit <= 10000){
+            $scope.isCritical = true;
+        }
+        
+        timer = $timeout($scope.startTimer, 1000);
+        if ($scope.timeLimit === 0) {
+            $scope.stopTimer();
+        }
+    };
 
 });
