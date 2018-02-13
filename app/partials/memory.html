@@ -1,12 +1,19 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-12">{{currOpened || 'null'}}
+            <div class="col-12">
                 <div ng-repeat="row in nizNizova track by $index" class="row">
-                    <div ng-repeat="obj in row track by $index" class="col-3">{{obj || '  obj'}}
-                        <button ng-click="open(obj)" ng-disabled="obj.disable" class="btn btn-primary col-12">
-                            <span ng-model="current" ng-if="obj.opened === true">{{obj.value}}</span>
-                        </button>
+                    <div ng-repeat="obj in row track by $index" class="col-3">
+                        <fieldset ng-disabled="obj.disable" class="flip col-12" ng-click="open(obj)">
+                            <div class="card" ng-class="{'flipped':obj.opened === true}">
+                                <div class="face front">
+                                    
+                                </div>
+                                <div class="face back">
+                                    {{obj.value}}
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
