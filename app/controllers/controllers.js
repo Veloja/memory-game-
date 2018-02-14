@@ -1,14 +1,12 @@
-app.controller('MemoryController', function ($scope, $timeout) {
-    $scope.nizNizova = [
-        [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }],
-        [{ value: 5 }, { value: 6 }, { value: 7 }, { value: 8 }],
-        [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }],
-        [{ value: 5 }, { value: 6 }, { value: 7 }, { value: 8 }],
-    ];
-
+app.controller('MemoryController', function ($scope, $timeout, memoryService) {
+    $scope.nizNizova = memoryService.getNizNizova();
+    console.log($scope.nizNizova);
+    // scope var
+    $scope.ne = true;
     $scope.isFlipped = false;
     $scope.currOpened = null;
-    $scope.open = function (obj, index) {
+
+    $scope.open = function (obj) {
         // if only one square is opened
         if ($scope.currOpened !== null) {
             // then open second square
@@ -35,33 +33,11 @@ app.controller('MemoryController', function ($scope, $timeout) {
                     obj.opened = false;
                 }, 1000);
             }
-            // open first clicked field; start of the state
+            // open first clicked square; start of the state
         } else {
             $scope.currOpened = obj;
             $scope.currOpened.opened = true;
             $scope.currOpened.disable = true;
-        }
-    }
-
-    function enableRestOf() {
-        for (var i = 0; i < $scope.nizNizova.length; i++) {
-            for (var j = 0; j < $scope.nizNizova[i].length; j++) {
-                if (!$scope.nizNizova[i][j].opened) {
-                    console.log($scope.nizNizova[i][j].opened);
-                    $scope.nizNizova[i][j].disable = false;
-                }
-            }
-        }
-    }
-
-    function disableRestOf(){
-        for (var i = 0; i < $scope.nizNizova.length; i++) {
-            for (var j = 0; j < $scope.nizNizova[i].length; j++) {
-                if (!$scope.nizNizova[i][j].opened) {
-                    console.log($scope.nizNizova[i][j].opened);
-                    $scope.nizNizova[i][j].disable = true;
-                }
-            }
         }
     }
 
@@ -72,7 +48,7 @@ app.controller('MemoryController', function ($scope, $timeout) {
     var timer = null;
     // start the timer as soon as the player presses start
 	$scope.start = function(){
-		
+		$scope.ne = false;
 		// set the time of 1 minutes and remove the cards guard
 		$scope.timeLimit = 60000;
 		$scope.inGame = true;
@@ -80,13 +56,14 @@ app.controller('MemoryController', function ($scope, $timeout) {
         $scope.startTimer();
 	}	
 	// function to stop the timer
-	$scope.stopTimer = function() {
+	$scope.stopTimer = function() {    
 	  $timeout.cancel(timer);
 	  $scope.inGame = false;
 	}
 
     $scope.startTimer = function() {
         $scope.timeLimit -= 1000;
+        ifAllSquaresOpened();
         if($scope.timeLimit <= 10000){
             $scope.isCritical = true;
         }
@@ -97,4 +74,38 @@ app.controller('MemoryController', function ($scope, $timeout) {
         }
     };
 
+    function enableRestOf() {
+        for (var i = 0; i < $scope.nizNizova.length; i++) {
+            for (var j = 0; j < $scope.nizNizova[i].length; j++) {
+                if (!$scope.nizNizova[i][j].opened) {
+                    $scope.nizNizova[i][j].disable = false;
+                }
+            }
+        }
+    }
+
+    function disableRestOf(){
+        for (var i = 0; i < $scope.nizNizova.length; i++) {
+            for (var j = 0; j < $scope.nizNizova[i].length; j++) {
+                if (!$scope.nizNizova[i][j].opened) {
+                    $scope.nizNizova[i][j].disable = true;
+                }
+            }
+        }
+    }
+
+    function ifAllSquaresOpened(){
+        var niz = [];
+        for (var i = 0; i < $scope.nizNizova.length; i++) {
+            for (var j = 0; j < $scope.nizNizova[i].length; j++) {
+                if ($scope.nizNizova[i][j].opened) {
+                    niz.push($scope.nizNizova[i][j])
+                } if(niz >= ($scope.nizNizova.length * $scope.nizNizova.length)){
+                    $scope.ne = false;
+                }
+            }
+        }
+    }
+
+    
 });

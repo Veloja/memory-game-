@@ -39,20 +39,22 @@ body {
 .flip .card .front {
     position: absolute;
     z-index: 1;
-    background: rgb(53, 31, 31);
+    background: rgb(177, 59, 59);
     cursor: pointer;
+    color: aliceblue;
   }
 .flip .card .back {
     transform: rotatex(-180deg);
-    background: rgb(46, 26, 160);
+    background: rgb(87, 84, 105);
     color: black;
     cursor: pointer;
   }
-.startbtn {
+.btn {
     display: block;
     margin: 10px auto;
     position: relative;
     text-align: center;
+    float: left;
   }
 .critical {
     color: red;
