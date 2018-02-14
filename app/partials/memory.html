@@ -1,17 +1,20 @@
 <body>
     <div class="container">
         <div class="footer">
-                <button type="button" class="btn btn-primary btn-lg" ng-disabled="inGame" ng-click="start()">Start</button>
+            <button type="button" class="btn btn-primary btn-lg" ng-disabled="inGame" ng-click="start()">Start</button>
             <div class="timer" ng-model="timeLimit" ng-class="{'critical':isCritical === true}">
                 {{timeLimit | date: 'm:ss'}}
             </div>
+            <select ng-change="update(selected)" ng-model="selected">
+                <option ng-repeat="option in select" value="{{option}}">{{option}}</option>
+            </select>
         </div>
-        <div class="row">
+        <div class="row" ng-show="show">
             <div class="col-12">
                 <div ng-repeat="row in nizNizova track by $index" class="row">
-                    <div ng-repeat="obj in row track by $index" class="col-3">
+                    <div ng-repeat="obj in row track by $index" class="col-2">
                         <fieldset ng-disabled="obj.disable || ne" class="flip col-12" ng-click="open(obj)">
-                            <div class="card"  ng-class="{'flipped':obj.opened === true}">
+                            <div class="card" ng-class="{'flipped':obj.opened === true}">
                                 <div class="face front">
                                     FLIP ME
                                 </div>

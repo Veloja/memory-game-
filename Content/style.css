@@ -9,7 +9,7 @@ body {
 }
 
 .flip {
-    height: 200px;
+    height: 100px;
     margin-bottom: 15px;
     font-size: 20px;
     perspective: 800;
@@ -34,19 +34,19 @@ body {
     font-family: Georgia;
     color: black;
     text-align: center;
-    line-height: 10em;
+    line-height: 3em;
   }
 .flip .card .front {
     position: absolute;
     z-index: 1;
     background: rgb(177, 59, 59);
     cursor: pointer;
-    color: aliceblue;
+    color: black;
   }
 .flip .card .back {
     transform: rotatex(-180deg);
     background: rgb(87, 84, 105);
-    color: black;
+    color: white;
     cursor: pointer;
   }
 .btn {

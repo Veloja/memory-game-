@@ -1,10 +1,20 @@
 app.controller('MemoryController', function ($scope, $timeout, memoryService) {
-    $scope.nizNizova = memoryService.getNizNizova();
-    console.log($scope.nizNizova);
-    // scope var
+    // when user selected level activate quiz
+    $scope.update = function(option){
+        $scope.selected = option;
+        $scope.show = true;
+        // bring randomized array of exact level that user has chosen
+        $scope.nizNizova = memoryService.getNizNizova($scope.selected);
+    }
+    
+    // scope vars
     $scope.ne = true;
     $scope.isFlipped = false;
     $scope.currOpened = null;
+    $scope.select = ['easy', 'medium', 'hard'];
+    $scope.selected = '';
+    $scope.show = false;
+    
 
     $scope.open = function (obj) {
         // if only one square is opened
@@ -70,6 +80,7 @@ app.controller('MemoryController', function ($scope, $timeout, memoryService) {
         
         timer = $timeout($scope.startTimer, 1000);
         if ($scope.timeLimit === 0) {
+            $scope.ne = true;
             $scope.stopTimer();
         }
     };
